@@ -1,4 +1,3 @@
-import Bugsnag from "@bugsnag/js"
 import axios from "axios"
 import Bottleneck from "bottleneck"
 import { clearAccessToken } from "./auth"
@@ -16,15 +15,7 @@ limiter.on("failed", async (error, jobInfo) => {
     // Retry according to the indication from the server with a small buffer
     return ((error.response.headers["retry-after"] || 1) * 1000) + REQUEST_RETRY_BUFFER
   } else if (error.response.status !== 401 && error.response.status !== 429 && jobInfo.retryCount < MAX_ERROR_RETRIES) {
-    // Log and retry any other failure once (e.g. 503/504 which sometimes occur)
-    Bugsnag.notify(
-      error,
-      (event) => {
-        event.addMetadata("response", error.response)
-        event.addMetadata("request", error.config)
-        event.groupingHash = "Retried Request"
-      }
-    )
+    // Retry without sending private request metadata to a telemetry service.
 
     if (error.response.status === 502) {
       // Try waiting a little longer to reduce problems with large playlists

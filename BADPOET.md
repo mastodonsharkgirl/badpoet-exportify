@@ -16,6 +16,8 @@ Run focused checks with Node 24: `node --test tests/badpoet-csv.test.mjs`.
 
 The full Exportify browser app still requires Spotify application configuration and normal account authorization. No OAuth client IDs or account tokens are supplied by Badpoet. The integrated Studio CSV/ZIP importer works from an existing export without a login. This repository has not been deployed to a public website.
 
+For this development fork, upstream's public OAuth application identifier remains in the inherited authentication code; it is not a secret or an owned Badpoet registration. Before a separate deployment, configure your own Spotify app and verify the callback flow. No live Spotify login has been verified for this fork. Formula-like names retain their spreadsheet-protection apostrophe when re-imported through a generic CSV reader; ordinary leading apostrophes must not be stripped indiscriminately.
+
 ## Follow upstream
 
 Keep `upstream` pointing to watsonbox/exportify. Put future changes in a branch and pull request; rerun both upstream tests and the Badpoet checks before deploying. This fork's code license does not grant rights to lyric text or music.

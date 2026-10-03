@@ -2,7 +2,6 @@ import React from "react"
 import { withTranslation, WithTranslation, Translation } from "react-i18next"
 import { ProgressBar } from "react-bootstrap"
 
-import Bugsnag from "@bugsnag/js"
 import PlaylistsData from "./data/PlaylistsData"
 import ConfigDropdown, { ConfigDropdownRef } from "./ConfigDropdown"
 import PlaylistSearch, { PlaylistSearchRef } from "./PlaylistSearch"
@@ -121,7 +120,6 @@ class PlaylistTable extends React.Component<PlaylistTableProps> {
   }
 
   handlePlaylistsLoadingStarted = () => {
-    Bugsnag.leaveBreadcrumb("Started exporting all playlists")
 
     this.configDropdown.current!.spin(true)
   }
@@ -131,7 +129,6 @@ class PlaylistTable extends React.Component<PlaylistTableProps> {
   }
 
   handlePlaylistsExportDone = () => {
-    Bugsnag.leaveBreadcrumb("Finished exporting all playlists")
 
     this.setState({
       progressBar: {
@@ -143,7 +140,6 @@ class PlaylistTable extends React.Component<PlaylistTableProps> {
   }
 
   handlePlaylistExportStarted = (playlistName: string, doneCount: number) => {
-    Bugsnag.leaveBreadcrumb(`Started exporting playlist ${playlistName}`)
 
     this.setState({
       progressBar: {
@@ -155,7 +151,6 @@ class PlaylistTable extends React.Component<PlaylistTableProps> {
   }
 
   handleConfigChanged = (config: any) => {
-    Bugsnag.leaveBreadcrumb(`Config updated to ${JSON.stringify(config)}`)
 
     this.setState({ config: config })
   }
@@ -176,7 +171,6 @@ class PlaylistTable extends React.Component<PlaylistTableProps> {
       const user = await apiCall("https://api.spotify.com/v1/me", this.props.accessToken)
         .then(response => response.data)
 
-      Bugsnag.setUser(user.id, user.uri, user.display_name)
 
       this.userId = user.id
       this.playlistsData = new PlaylistsData(
