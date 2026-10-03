@@ -1,5 +1,6 @@
 import { saveAs } from "file-saver"
 import i18n from "../i18n/config"
+import { csvDocument, csvCell } from "../badpoetCsv"
 
 import TracksData from "components/data/TracksData"
 import TracksBaseData from "components/data/TracksBaseData"
@@ -53,19 +54,11 @@ class TracksCsvFile {
   }
 
   content(): string {
-    let csvContent = ''
-
-    csvContent += this.columnNames.map(this.sanitize).join() + "\n"
-
-    this.lineTrackData.forEach((lineTrackData, trackId) => {
-      csvContent += lineTrackData.map(this.sanitize).join(",") + "\n"
-    })
-
-    return csvContent
+    return csvDocument(this.columnNames, this.lineTrackData)
   }
 
   sanitize(string: string): string {
-    return '"' + String(string).replace(/"/g, '""') + '"'
+    return csvCell(string)
   }
 }
 
